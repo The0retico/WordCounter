@@ -1,6 +1,8 @@
 package sk.the0retico.textsearch;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +39,7 @@ public abstract class AbstractFrequencyTableTest {
 	 */
 	@Test
 	public final void shouldBeEmptyAfterCreation() {
-		ImmutableMap.of();
-		// assertThat(table.frequent(0), is(equalTo(emptyMap)));
-		assertTrue(true);
+		final ImmutableMap<Word, Integer> emptyMap = ImmutableMap.of();
+		assertThat(table.frequent(0), is(equalTo(emptyMap)));
 	}
 }
