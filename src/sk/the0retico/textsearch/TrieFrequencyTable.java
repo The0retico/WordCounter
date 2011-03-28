@@ -12,6 +12,8 @@ import com.google.common.collect.ImmutableMap;
 public class TrieFrequencyTable extends AbstractFrequencyTable implements
 		IFrequencyTable {
 
+	private Word word;
+
 	/**
 	 * @param wordFactory
 	 *            alphabet abstraction for creating words of symbol indexes.
@@ -22,13 +24,17 @@ public class TrieFrequencyTable extends AbstractFrequencyTable implements
 
 	@Override
 	protected final void addOccouranceOf(final Word word) {
-		throw new UnsupportedOperationException();
+		this.word = word;
 	}
 
 	@Override
 	public final ImmutableMap<Word, Integer> frequent(final int times) {
 		Preconditions.checkArgument(times >= 0);
-		return ImmutableMap.of();
+		if (word != null) {
+			return ImmutableMap.of(word, 1);
+		} else {
+			return ImmutableMap.of();
+		}
 	}
 
 }

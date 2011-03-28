@@ -1,5 +1,7 @@
 package sk.the0retico.textsearch;
 
+import java.util.Arrays;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -65,6 +67,32 @@ public class Word implements Comparable<Word> {
 		Preconditions.checkNotNull(other);
 		Preconditions.checkElementIndex(index, other.symbols.length);
 		return symbols[index].compareTo(other.symbols[index]);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Word)) {
+			return false;
+		}
+		final Word other = (Word) obj;
+		if (!Arrays.equals(symbols, other.symbols)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(symbols);
+		return result;
 	}
 
 	/**

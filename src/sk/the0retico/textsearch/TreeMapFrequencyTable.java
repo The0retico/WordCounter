@@ -32,7 +32,13 @@ public class TreeMapFrequencyTable extends AbstractFrequencyTable {
 
 	@Override
 	protected final void addOccouranceOf(final Word word) {
-		throw new UnsupportedOperationException();
+		final int numberOfOccourances;
+		if (table.containsKey(word)) {
+			numberOfOccourances = table.get(word);
+		} else {
+			numberOfOccourances = 0;
+		}
+		table.put(word, numberOfOccourances + 1);
 	}
 
 	/*
