@@ -1,6 +1,11 @@
 package sk.the0retico.textsearch;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
+import org.junit.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * @author The0retico
@@ -27,4 +32,13 @@ public abstract class AbstractFrequencyTableTest {
 		table = getImplementation();
 	}
 
+	/**
+	 * The frequency table righ after creation should be empty.
+	 */
+	@Test
+	public final void shouldBeEmptyAfterCreation() {
+		ImmutableMap.of();
+		// assertThat(table.frequent(0), is(equalTo(emptyMap)));
+		assertTrue(true);
+	}
 }

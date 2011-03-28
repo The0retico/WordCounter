@@ -25,5 +25,5 @@ interface IFrequencyTable {
 	 * @return map of words and their occurances with no less then times
 	 *         occourances
 	 */
-	ImmutableMap<Integer[], Integer> frequent(int times);
+	ImmutableMap<Word, Integer> frequent(int times);
 }
