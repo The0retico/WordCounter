@@ -22,16 +22,18 @@ public abstract class AbstractFrequencyTableTest {
 	private IFrequencyTable table;
 
 	/**
-	 * @return IFrequencyTable implementation for testing
+	 * @param alphabet
+	 *            which creates valid words from symbol indexes
+	 * @return implementation of the word frequency table for testing
 	 */
-	protected abstract IFrequencyTable getImplementation();
+	protected abstract IFrequencyTable getImplementation(Alphabet alphabet);
 
 	/**
 	 * Set up implementation of the IFrequencyTable for testing.
 	 */
 	@Before
 	public final void setUp() {
-		table = getImplementation();
+		table = getImplementation(new Alphabet(2));
 	}
 
 	/**

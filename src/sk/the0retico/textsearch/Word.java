@@ -43,19 +43,6 @@ public class Word implements Comparable<Word> {
 
 	/**
 	 * @param other
-	 *            word containing at least index symbols
-	 * @param index
-	 *            of symbols for this and other word to be compared
-	 * @return difference between symbols at index in this and other words
-	 */
-	private int compareToAt(final Word other, final int index) {
-		Preconditions.checkNotNull(other);
-		Preconditions.checkElementIndex(index, other.symbols.length);
-		return symbols[index].compareTo(other.symbols[index]);
-	}
-
-	/**
-	 * @param other
 	 *            word with same length as this
 	 * @return the difference between first non equal symbols of this and other
 	 *         word
@@ -64,22 +51,32 @@ public class Word implements Comparable<Word> {
 		Preconditions.checkNotNull(other);
 		Preconditions.checkArgument(other.symbols.length == symbols.length);
 		final int index = indexOfFirstDifference(other);
-		return compareToAt(other, index);
+		return differenceAt(other, index);
+	}
+
+	/**
+	 * @param other
+	 *            word containing at least index symbols
+	 * @param index
+	 *            of symbols for this and other word to be compared
+	 * @return difference between symbols at index in this and other words
+	 */
+	private int differenceAt(final Word other, final int index) {
+		Preconditions.checkNotNull(other);
+		Preconditions.checkElementIndex(index, other.symbols.length);
+		return symbols[index].compareTo(other.symbols[index]);
 	}
 
 	/**
 	 * @param other
 	 *            word with at least same length as this
-	 * @return index of first symbol in other word not equal to symbol in this
-	 *         word at the same index or the last index
+	 * @return first index of symbol on which this and other words differ
 	 */
 	private int indexOfFirstDifference(final Word other) {
 		Preconditions.checkNotNull(other);
 		Preconditions.checkArgument(other.symbols.length >= symbols.length);
 		int index = 0;
-		int difference = compareToAt(other, 0);
-		while (difference == 0 && index + 1 < symbols.length) {
-			difference = compareToAt(other, index + 1);
+		while (index < symbols.length && differenceAt(other, index) == 0) {
 			index++;
 		}
 		return index;

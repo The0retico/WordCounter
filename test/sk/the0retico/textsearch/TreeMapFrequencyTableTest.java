@@ -10,8 +10,8 @@ package sk.the0retico.textsearch;
 public class TreeMapFrequencyTableTest extends AbstractFrequencyTableTest {
 
 	@Override
-	protected final IFrequencyTable getImplementation() {
-		return new TreeMapFrequencyTable();
+	protected final IFrequencyTable getImplementation(final Alphabet alphabet) {
+		return new TreeMapFrequencyTable(alphabet);
 	}
 
 }

@@ -17,7 +17,7 @@ interface IFrequencyTable {
 	 *            Adds occourance of a word into the table.
 	 * 
 	 */
-	void add(int... word);
+	void add(Integer... word);
 
 	/**
 	 * @param times
