@@ -25,7 +25,7 @@
         status="integration">
 	</info>
 	<dependencies>
-		<dependency org="com.google.guava" name="guava" rev="r08+"/>
+		<dependency org="com.google.guava" name="guava" rev="r09+"/>
 		<dependency org="com.carrotsearch" name="junit-benchmarks" rev="0.2.1+"/>
 	</dependencies>
 </ivy-module>
