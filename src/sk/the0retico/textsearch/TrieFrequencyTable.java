@@ -18,8 +18,8 @@ public class TrieFrequencyTable extends AbstractFrequencyTable implements
 	 * @param wordFactory
 	 *            alphabet abstraction for creating words of symbol indexes.
 	 */
-	public TrieFrequencyTable(final Alphabet wordFactory) {
-		super(wordFactory);
+	public TrieFrequencyTable(final Integer alphabetSize) {
+		super(alphabetSize);
 	}
 
 	@Override

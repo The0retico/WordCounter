@@ -22,16 +22,17 @@ public class TreeMapFrequencyTable extends AbstractFrequencyTable {
 	/**
 	 * Create new empty frequency table.
 	 * 
-	 * @param wordFactory
+	 * @param alphabetSize
 	 *            for creating words
 	 */
-	public TreeMapFrequencyTable(final Alphabet wordFactory) {
-		super(wordFactory);
+	public TreeMapFrequencyTable(final Integer alphabetSize) {
+		super(alphabetSize);
 		table = Maps.newTreeMap();
 	}
 
 	@Override
 	protected final void addOccouranceOf(final Word word) {
+		Preconditions.checkNotNull(word);
 		final int numberOfOccourances;
 		if (table.containsKey(word)) {
 			numberOfOccourances = table.get(word);

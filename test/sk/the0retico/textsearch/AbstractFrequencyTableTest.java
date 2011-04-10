@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -27,8 +28,7 @@ public abstract class AbstractFrequencyTableTest {
 	 */
 	@BeforeClass
 	public static final void setUpBeforeClass() {
-		final int numberOfSymbols = 2;
-		alphabet = new Alphabet(numberOfSymbols);
+		alphabetSize = 2;
 	}
 
 	/**
@@ -39,21 +39,21 @@ public abstract class AbstractFrequencyTableTest {
 	/**
 	 * Alphabet used to create words in this test.
 	 */
-	private static Alphabet alphabet;
+	private static Integer alphabetSize;
 
 	/**
 	 * @param alphabet
 	 *            which creates valid words from symbol indexes
 	 * @return implementation of the word frequency table for testing
 	 */
-	protected abstract IFrequencyTable getImplementation(Alphabet alphabet);
+	protected abstract IFrequencyTable getImplementation(Integer alphabetSize);
 
 	/**
 	 * Set up implementation of the IFrequencyTable for testing.
 	 */
 	@Before
 	public final void setUp() {
-		table = getImplementation(alphabet);
+		table = getImplementation(alphabetSize);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public abstract class AbstractFrequencyTableTest {
 	@Test
 	public final void shouldBeEmptyAfterCreation() {
 		final ImmutableMap<Word, Integer> emptyMap = ImmutableMap.of();
-		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(0);
+		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(1);
 		assertThat(wordFrequencies, is(notNullValue()));
 		assertThat(wordFrequencies, is(equalTo(emptyMap)));
 	}
@@ -72,12 +72,13 @@ public abstract class AbstractFrequencyTableTest {
 	 */
 	@Test
 	public final void shouldHaveOneEntryAfterAddingOneWord() {
-		table.add(0, 1, 0, 0);
+		table.add(new Word(ImmutableList.of(0, 1, 0, 0)));
 		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(0);
-		assertNotNull(wordFrequencies);
-		assertFalse(wordFrequencies.isEmpty());
+		assertNotNull("Frequency table should not be null", wordFrequencies);
+		assertFalse("Frequency table should not be empty",
+				wordFrequencies.isEmpty());
 		assertEquals(1, wordFrequencies.entrySet().size());
-		final Word word = alphabet.createWord(0, 1, 0, 0);
+		final Word word = new Word(ImmutableList.of(0, 1, 0, 0));
 		assertTrue(wordFrequencies.containsKey(word));
 		assertTrue(wordFrequencies.containsValue(1));
 		assertEquals(wordFrequencies, table.frequent(1));

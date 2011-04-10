@@ -11,13 +11,13 @@ import com.google.common.collect.ImmutableMap;
 interface IFrequencyTable {
 
 	/**
-	 * @param word
+	 * @param immutableList
 	 *            represented as an array of alphabet letter indexes
 	 * 
 	 *            Adds occourance of a word into the table.
 	 * 
 	 */
-	void add(Integer... word);
+	void add(Word word);
 
 	/**
 	 * @param times

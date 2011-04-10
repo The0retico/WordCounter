@@ -10,8 +10,8 @@ package sk.the0retico.textsearch;
 public class TrieFrequencyTableTest extends AbstractFrequencyTableTest {
 
 	@Override
-	protected final IFrequencyTable getImplementation(final Alphabet alphabet) {
-		return new TrieFrequencyTable(alphabet);
+	protected final IFrequencyTable getImplementation(final Integer alphabetSize) {
+		return new TrieFrequencyTable(alphabetSize);
 	}
 
 }
