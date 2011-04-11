@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterators;
 
@@ -21,7 +22,7 @@ import com.google.common.collect.Iterators;
  * 
  *         Contract test for IFrequencyTable implementations.
  */
-public abstract class AbstractFrequencyTableTest {
+public abstract class AbstractFrequencyTableTest extends AbstractBenchmark {
 
 	/**
 	 * Set up the alphabet for creating words.
@@ -48,12 +49,55 @@ public abstract class AbstractFrequencyTableTest {
 	 */
 	protected abstract IFrequencyTable getImplementation(Integer sigma);
 
+	@Test
+	public final void sanitiyTest() {
+		final Word firstWord = new Word(
+				Iterators.unmodifiableIterator(Iterators.forArray(0, 1, 0)));
+		final Word secondWord = new Word(
+				Iterators.unmodifiableIterator(Iterators.forArray(0, 0, 1)));
+		assertFalse(firstWord.equals(secondWord));
+	}
+
 	/**
 	 * Set up implementation of the IFrequencyTable for testing.
 	 */
 	@Before
 	public final void setUp() {
 		table = getImplementation(alphabetSize);
+	}
+
+	@Test
+	public final void shouldAddEntryIfAddedDifferentWord() {
+		final Word firstWord = new Word(
+				Iterators.unmodifiableIterator(Iterators.forArray(0, 1, 0)));
+		table.add(firstWord);
+		final Word secondWord = new Word(
+				Iterators.unmodifiableIterator(Iterators.forArray(0, 0, 1)));
+		table.add(secondWord);
+		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(1);
+		assertNotNull("Frequency table should not be null", wordFrequencies);
+		assertFalse("Frequency table should not be empty",
+				wordFrequencies.isEmpty());
+		assertEquals(2, wordFrequencies.entrySet().size());
+		assertTrue(wordFrequencies.containsKey(firstWord));
+		assertTrue(wordFrequencies.containsKey(secondWord));
+		assertEquals(1, wordFrequencies.get(firstWord).intValue());
+		assertEquals(1, wordFrequencies.get(secondWord).intValue());
+	}
+
+	@Test
+	public final void shouldAddOccouranceIfAddedSameWord() {
+		final Word word = new Word(Iterators.unmodifiableIterator(Iterators
+				.forArray(0, 1, 0)));
+		table.add(word);
+		table.add(word);
+		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(2);
+		assertNotNull("Frequency table should not be null", wordFrequencies);
+		assertFalse("Frequency table should not be empty",
+				wordFrequencies.isEmpty());
+		assertEquals(1, wordFrequencies.entrySet().size());
+		assertTrue(wordFrequencies.containsKey(word));
+		assertEquals(2, wordFrequencies.get(word).intValue());
 	}
 
 	/**
@@ -72,15 +116,14 @@ public abstract class AbstractFrequencyTableTest {
 	 */
 	@Test
 	public final void shouldHaveOneEntryAfterAddingOneWord() {
-		table.add(new Word(Iterators.unmodifiableIterator(Iterators.forArray(0,
-				1, 0, 0))));
+		final Word word = new Word(Iterators.unmodifiableIterator(Iterators
+				.forArray(0, 1, 0, 0)));
+		table.add(word);
 		final ImmutableMap<Word, Integer> wordFrequencies = table.frequent(1);
 		assertNotNull("Frequency table should not be null", wordFrequencies);
 		assertFalse("Frequency table should not be empty",
 				wordFrequencies.isEmpty());
 		assertEquals(1, wordFrequencies.entrySet().size());
-		final Word word = new Word(Iterators.unmodifiableIterator(Iterators
-				.forArray(0, 1, 0, 0)));
 		assertTrue(wordFrequencies.containsKey(word));
 		assertTrue(wordFrequencies.containsValue(1));
 		assertEquals(wordFrequencies, table.frequent(1));

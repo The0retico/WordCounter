@@ -1,5 +1,6 @@
 package sk.the0retico.textsearch;
 
+
 /**
  * @author The0retico
  * 
