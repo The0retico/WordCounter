@@ -1,11 +1,14 @@
 package sk.the0retico.textsearch;
 
+import java.util.Iterator;
+
 import com.google.common.base.Equivalence;
 import com.google.common.base.Equivalences;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.UnmodifiableIterator;
 
-public class Word implements Comparable<Word> {
+public class Word implements Comparable<Word>, Iterable<Integer> {
 
 	private final ImmutableList<Integer> symbols;
 
@@ -15,8 +18,8 @@ public class Word implements Comparable<Word> {
 	private static final Equivalence<Iterable<Integer>> SYMBOL_EQUIVALENCE = Equivalences
 			.pairwise(Equivalences.equals());
 
-	public Word(final ImmutableList<Integer> word) {
-		symbols = word;
+	public Word(final UnmodifiableIterator<Integer> word) {
+		symbols = ImmutableList.copyOf(word);
 	}
 
 	@Override
@@ -49,6 +52,11 @@ public class Word implements Comparable<Word> {
 	@Override
 	public int hashCode() {
 		return SYMBOL_EQUIVALENCE.hash(symbols);
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return symbols.iterator();
 	}
 
 }

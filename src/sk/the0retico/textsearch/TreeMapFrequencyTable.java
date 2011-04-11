@@ -12,7 +12,7 @@ import com.google.common.collect.Maps;
  *         Frequency table implementation using java.lang.TreeMap.
  * 
  */
-public class TreeMapFrequencyTable extends AbstractFrequencyTable {
+public class TreeMapFrequencyTable implements IFrequencyTable {
 
 	/**
 	 * This frequency table state.
@@ -25,13 +25,12 @@ public class TreeMapFrequencyTable extends AbstractFrequencyTable {
 	 * @param alphabetSize
 	 *            for creating words
 	 */
-	public TreeMapFrequencyTable(final Integer alphabetSize) {
-		super(alphabetSize);
+	public TreeMapFrequencyTable() {
 		table = Maps.newTreeMap();
 	}
 
 	@Override
-	protected final void addOccouranceOf(final Word word) {
+	public final void add(final Word word) {
 		Preconditions.checkNotNull(word);
 		final int numberOfOccourances;
 		if (table.containsKey(word)) {

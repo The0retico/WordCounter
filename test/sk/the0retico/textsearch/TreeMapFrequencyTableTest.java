@@ -11,7 +11,7 @@ public class TreeMapFrequencyTableTest extends AbstractFrequencyTableTest {
 
 	@Override
 	protected final IFrequencyTable getImplementation(final Integer alphabetSize) {
-		return new TreeMapFrequencyTable(alphabetSize);
+		return new TreeMapFrequencyTable();
 	}
 
 }
